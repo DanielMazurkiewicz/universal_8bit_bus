@@ -20,6 +20,9 @@ Every expansion card should communicate with system via FIFO type memory located
 
 Command with according data placed in FIFO memory will be executed upon request signaled from system with EXE pin. End of execution of command or any other event can be signaled by expansion card to system with IRQ line.
 
+# Logical structure
+Expansion cards are devices that can implement variety of functions that may even be completly unrelated, for example card can support video out and mouse.
+
 # Bus at host system
 Every card slot should be mapped to system memory and represented as separate two bytes address. Addresses with offset +0 are reserved to invoke command execution on card (EXE pin for is set to LOW while card enabled), where as addresses with offset +1 are meant for reading/writing cards FIFO.
 
@@ -30,12 +33,12 @@ To avoid fragmentation of expansions cards market (and necessity of drivers deve
 List of standardized command constants:
 * 00h - getExpansionCardId - returns to buffer expansion card ID
 * 01h - getExpansionCardName - returns number of characters of expansion card name followed by name encoded in ASCII
-* 02h - getFunctions - returns number of functions that expansion card have implemented (single card can have many functions, for example autdio in, out, video in and out), followed by list of functions:
+* 02h - getFunctions - returns number of functions that expansion card have implemented, followed by list of functions (single card may have many functions, for example audio in and out, video in and out on one board):
   - 00h - video out
   - 01h - video in (camera, grabber)
   - 02h - audio out
   - 03h - audio in
-  - 04h - image out (printers, plotters)
+  - 04h - image out (printers, plotters, braile bars)
   - 05h - image in (scanners)
   - 06h - keyboard, button
   - 07h - joystick
@@ -62,4 +65,16 @@ List of standardized command constants:
   - 1Ch - real time clock
   - FDh - firmware
   - FEh - user function
+
+# Commands specific to functions
+Commands above 0Fh are specific to functions, their structure looks like that:
+
+```<1 byte command constant> <1 byte function address> <n bytes of parameters>```
   
+  where function address is an occurence on list of functions returned by 'getFunctions'
+
+# IDC socket
+Mainboard should use 20 pin two row female IDC socket.
+
+# TODO
+Pinouts and detailed commands specification for each function
