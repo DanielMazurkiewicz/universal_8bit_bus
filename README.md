@@ -24,7 +24,7 @@ Command with according data placed in FIFO memory will be executed upon request 
 Expansion cards are devices that can implement variety of functions that may even be completly unrelated, for example card can support video out and mouse.
 
 # Bus at host system
-Every card slot should be mapped to system memory and represented as separate two bytes address. Addresses with offset +0 are reserved to invoke command execution on card (EXE pin for is set to LOW while card enabled), where as addresses with offset +1 are meant for reading/writing cards FIFO.
+Every card slot should be mapped to system memory and represented as separate addresses of two bytes. Addresses with offset +0 are reserved to invoke command execution on card (EXE pin for is set to LOW while card enabled), where as addresses with offset +1 are meant for reading/writing cards FIFO.
 
 # Standardized interfaces
 To avoid fragmentation of expansions cards market (and necessity of drivers development for each of them) standardized set of commands should be prepared for card functions like: video out, video in, audio out, audio in, keyboard, joystick, mouse, network, storage (full list below)
